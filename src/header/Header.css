@@ -1,4 +1,33 @@
 .header{
-    background-color: chocolate;
     grid-area: header;
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+    "nav logo";
+}
+
+.nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: right;
+    padding-right: 2rem;
+}
+
+.nav > ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.logo{
+    display: flex;
+    max-height: 100%;
+    align-items: center;
+    justify-content: right;
+    padding-right: 2rem;
+}
+
+.svg{
+    height: 100%;
+    width: auto;
 }

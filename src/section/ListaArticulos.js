@@ -10,8 +10,8 @@ function ListaArticulos() {
     return (
         <section className="ListaArticulos">
             <ul>
-                {tags.map((tag) => (
-                    <li key={tag.id}>{tag}</li>
+                {tags.map((tag, index) => (
+                    <li key={index}>{tag}</li>
                 ))}
             </ul>
         </section>
