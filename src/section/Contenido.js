@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import NotFound from '../NotFound';
 import './Contenido.css';
@@ -6,8 +6,10 @@ import CreaArticulo from './CreaArticulos';
 import ListaArticulos from './ListaArticulos';
 import Login from './Login';
 
+
 function Contenido({ estaLogin, login }) {
     const [loader, setLoader] = useState(false);
+    const referencia = useRef(null)
 
     function estadoLoader(estado) {
         setLoader(estado);
@@ -51,6 +53,7 @@ function Contenido({ estaLogin, login }) {
                 <Route path='/'>
                     <Redirect to="/articulos" />
                 </Route>
+
                 
             </Switch>
         </section>

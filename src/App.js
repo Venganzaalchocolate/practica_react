@@ -4,9 +4,8 @@ import './App.css';
 import Footer from './footer/Footer';
 import Header from './header/Header';
 import Contenido from './section/Contenido';
-import { comprobacionInicialToken } from './utils/token';
+import { cerrarSesion, comprobacionInicialToken } from './utils/token';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { logout } from './api/service';
 
 const tieneCabeceraConToken = comprobacionInicialToken();
 
@@ -15,14 +14,15 @@ function App() {
 
     const estadoLogin = () => setlogin(true);
 
-    const handleLogout = () => {
-        logout().then(() => setlogin(false));
-    };
+    const cierrasesion=()=> {
+        cerrarSesion();
+        setlogin(false);
 
+    }
     return (
         <Router>
             <div className="grid">
-                <Header login={login} handleLogout={handleLogout} />
+                <Header login={login} handleLogout={cierrasesion} />
                 <Contenido estaLogin={estadoLogin} login={login} />
                 <Footer />
             </div>

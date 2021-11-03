@@ -1,6 +1,6 @@
 
 import storage from '../utils/storage';
-import cliente, { cambiaAutorizacion, eliminarTokenCabecera } from './cliente';
+import cliente, { cambiaAutorizacion} from './cliente';
 
 export const getTagsUrl = () => {
     const url = '/api/v1/adverts/tags';
@@ -34,8 +34,3 @@ export const creaArticulo = async (formulario) => {
     }
 };
 
-export const logout = () =>
-    Promise.resolve().then(() => {
-        eliminarTokenCabecera();
-        storage.remove('token');
-    });

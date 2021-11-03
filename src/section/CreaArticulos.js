@@ -84,9 +84,8 @@ function CreaArticulo() {
                     <option value="work">work</option>
                 </select>
                 <input
-                    type="file"
-                    value={valor.file}
-                    onChange={cambioCelda}>
+                    name="photo"
+                    type="file">
 
                 </input>
                 <button
