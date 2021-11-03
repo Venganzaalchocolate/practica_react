@@ -1,17 +1,29 @@
 import { useEffect, useState } from 'react';
-import { getTagsUrl } from '../api/service';
+import { getArticulos } from '../api/service';
+import { Loader } from '../utils/Loader';
 import './ListaArticulos.css';
 
-function ListaArticulos() {
-    const [tags, setTags] = useState([]);
+function ListaArticulos({ setLoader, loader }) {
+    const [articulos, setArticulos] = useState([]);
 
-    useEffect(()=>{getTagsUrl().then(response => setTags(response.data))}, [])
+    useEffect(() => {
+        setLoader(true);
+        getArticulos().then((response) => {
+            setArticulos(response.data);
+            setLoader(false)
+        });
+    }, []);
 
     return (
         <section className="ListaArticulos">
+            {loader && (
+                <div className="loader">
+                    <Loader />
+                </div>
+            )}
             <ul>
-                {tags.map((tag, index) => (
-                    <li key={index}>{tag}</li>
+                {articulos.map((articulo) => (
+                    <li key={articulo.id}>{articulo.name}</li>
                 ))}
             </ul>
         </section>

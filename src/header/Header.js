@@ -1,16 +1,28 @@
 import './Header.css';
 import React from 'react';
-import {ReactComponent as Logo } from "./../images/logo.svg";
+import { ReactComponent as Logo } from './../images/logo.svg';
+import { Link } from 'react-router-dom';
 
-function Header() {
+function Header({ login, handleLogout }) {
     return (
         <header className="header">
-            <div className="logo"><Logo className="svg"/></div>
+            <Link to="/">
+                <div className="logo_">
+                    <Logo className="svg"/>
+                </div>
+            </Link>
             <nav className="nav">
                 <ul>
-                    <li>Login</li>
-                    <li>Crea Articulo</li>
-                    <li>Buscar</li>
+                    {login ? (
+                        <li onClick={handleLogout}>Cierra sesion</li>
+                    ) : (
+                        <li>
+                            <Link to="/login">Login</Link>
+                        </li>
+                    )}
+                    <li>
+                        <Link to="/creaarticulos">Crea Articulo</Link>
+                    </li>
                 </ul>
             </nav>
         </header>

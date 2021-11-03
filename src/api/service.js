@@ -1,8 +1,14 @@
+
 import storage from '../utils/storage';
-import cliente, { cambiaAutorizacion } from './cliente';
+import cliente, { cambiaAutorizacion, eliminarTokenCabecera } from './cliente';
 
 export const getTagsUrl = () => {
     const url = '/api/v1/adverts/tags';
+    return cliente.get(url);
+};
+
+export const getArticulos = () => {
+    const url = '/api/v1/adverts';
     return cliente.get(url);
 };
 
@@ -15,6 +21,21 @@ export const login = async (objetoCredenciales, guardar) => {
             storage.set('token', token.data.accessToken);
         }
     } catch (error) {
-        return error;
+        return Promise.reject(error);
     }
 };
+
+export const creaArticulo = async (formulario) => {
+    const url = '/api/v1/adverts';
+    try {
+        await cliente.post(url, formulario);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const logout = () =>
+    Promise.resolve().then(() => {
+        eliminarTokenCabecera();
+        storage.remove('token');
+    });
