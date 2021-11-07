@@ -2,13 +2,13 @@
 import storage from '../utils/storage';
 import cliente, { cambiaAutorizacion} from './cliente';
 
-export const getTagsUrl = () => {
+export const getTags = () => {
     const url = '/api/v1/adverts/tags';
     return cliente.get(url);
 };
 
-export const getArticulos = () => {
-    const url = '/api/v1/adverts';
+export const getArticulos = (id='') => {
+    const url = `/api/v1/adverts/${id}`;
     return cliente.get(url);
 };
 
@@ -33,4 +33,10 @@ export const creaArticulo = async (formulario) => {
         console.log(error);
     }
 };
+
+export const borrarArticuloApi = async (id='') =>{
+    const url= `/api/v1/adverts/${id}`
+    return cliente.delete(url)
+}
+
 

@@ -1,0 +1,11 @@
+.imagen{
+    width: 100px;
+    height: 100px;
+}
+
+.listaArticulos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 2rem;
+}

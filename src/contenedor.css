@@ -14,3 +14,7 @@
     ". contenido ."
     ". footer ."
 }
+
+.contenido {
+    grid-area: contenido
+}

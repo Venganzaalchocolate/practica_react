@@ -1,36 +1,60 @@
-import { useEffect, useState } from 'react';
-import { getArticulos } from '../api/service';
-import { Loader } from '../utils/Loader';
-import './ListaArticulos.css';
-import noimagen  from '../images/nofoto.jpg'
+import { useEffect, useState } from 'react'
+import { getArticulos } from '../api/service'
+import './ListaArticulos.css'
+import noimagen from '../images/nofoto.jpg'
+import { Link } from 'react-router-dom'
+import { element } from 'prop-types'
 
-function ListaArticulos({ setLoader, loader }) {
-    const [articulos, setArticulos] = useState([]);
+const url = process.env.REACT_APP_API_BASE_URL
 
-    useEffect(() => {
-        setLoader(true);
-        getArticulos().then((response) => {
-            setArticulos(response.data);
-            setLoader(false)
-        });
-    }, []);
+function ListaArticulos(articulos) {
+  const [error, setError] = useState(null)
+  const [art, setart]=useState([])
 
-    return (
-        <section className="ListaArticulos">
-            {loader && (
-                <div className="loader">
-                    <Loader />
-                </div>
-            )}
-            {articulos.map((articulo) => (
+  const obtenerArticulos = async () => {
+    try {
+        return await articulos;
+    } catch (error) {
+        setError(error.message);
+    }
+};
+  
+
+  useEffect(() => {
+    obtenerArticulos().then(function (datos) {
+      const datosArticulos=datos.articulos;
+      setart(datosArticulos)})
+  }, [articulos])
+
+  return (
+    <section className='listaArticulos'>
+      {error && <div>{error}</div>}
+      {art.length > 0 ? (
+        art.map(articulo => (
+          <Link to={`/adverts/${articulo.id}`}>
             <article key={articulo.id}>
-                <div><img src={articulo.photo===null ?noimagen : process.env.REACT_APP_API_BASE_URL+articulo.photo }  alt="Girl in a jacket" width="100" height="100"/></div>
-                <h2 >{articulo.name}</h2>
-                <p>{articulo.price}</p>
-                {articulo.sale ? <p>Vendo</p> : <p>Busco</p>}
-            </article> ))}
-        </section>
-    );
+              <div>
+                <img
+                  className='imagen'
+                  src={
+                    articulo.photo === null ? noimagen : url + articulo.photo
+                  }
+                />
+              </div>
+              <h2>{articulo.name}</h2>
+              <p>{articulo.price}</p>
+              {articulo.sale ? <p>Vendo</p> : <p>Busco</p>}
+              {articulo.tags.map(element=>(<p>{element}</p>))}
+            </article>
+          </Link>
+        ))
+      ) : (
+        <Link to='/adverts/new'>
+          <h1>No hay articulos, crea el tuyo</h1>
+        </Link>
+      )}
+    </section>
+  )
 }
 
-export default ListaArticulos;
+export default ListaArticulos

@@ -10,7 +10,7 @@ function NotFound() {
                 <h2>
                     No encontramos lo que buscas, por favor vuelve a intentarlo
                 </h2>
-                <a className='boton_404' href="/articulos">Volver</a>
+                <a className='boton_404' href="/adverts">Volver</a>
             </div>
         </div>
     );

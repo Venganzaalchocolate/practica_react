@@ -1,33 +1,29 @@
-import React from 'react';
-import { useState } from 'react';
-import './App.css';
-import Footer from './footer/Footer';
-import Header from './header/Header';
-import Contenido from './section/Contenido';
-import { cerrarSesion, comprobacionInicialToken } from './utils/token';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from 'react'
+import { useState } from 'react'
+import { cerrarSesion, comprobacionInicialToken } from './utils/token'
+import { AuthContextProvider } from "./utils/contexto.js"
+import Contenedor from './Contenedor'
+import { useHistory } from 'react-router'
 
-const tieneCabeceraConToken = comprobacionInicialToken();
+const tieneCabeceraConToken = comprobacionInicialToken()
 
 function App() {
-    const [login, setlogin] = useState(tieneCabeceraConToken);
+  const history = useHistory()
+  const [login, setlogin] = useState(tieneCabeceraConToken)
 
-    const estadoLogin = () => setlogin(true);
+  const cierrasesion = () => {
+    cerrarSesion()
+    setlogin(false)
+  }
 
-    const cierrasesion=()=> {
-        cerrarSesion();
-        setlogin(false);
-
-    }
-    return (
-        <Router>
-            <div className="grid">
-                <Header login={login} handleLogout={cierrasesion} />
-                <Contenido estaLogin={estadoLogin} login={login} />
-                <Footer />
-            </div>
-        </Router>
-    );
+  const setlog = () => {
+    setlogin(true)
+  }
+  return (
+    <AuthContextProvider value={{ login, cierrasesion, setlog, history }}>
+      <Contenedor/>
+    </AuthContextProvider>
+  )
 }
 
-export default App;
+export default App

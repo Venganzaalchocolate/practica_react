@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import { login } from '../api/service';
+import AuthContext from '../utils/contexto';
 import { Loader } from '../utils/Loader';
 import './login.css'
 
-function Login({ estaLogin, setLoader, loader}) {
+function Login() {
+    const { setlog } = useContext(AuthContext)
     const [valor, setValor] = useState({ email: '', password: '' });
     const [guardar, setGuardar] = useState(false);
     const [error, setError] = useState(null);
-    
-
+    const history = useHistory()
+    const [loader, setLoader]=useState(false)
     //para actualizar un diccionario solo cambiando los campos iguales usamos el ...valor (mantiene los campos iguales y cambia los que les demos)
     const cambioCelda = (evento) => {
         setValor((estadoAnterior) => ({
@@ -23,19 +26,19 @@ function Login({ estaLogin, setLoader, loader}) {
 
     const envioFormulario = async (evento) => {
         evento.preventDefault();
-        setLoader(true);
+        //setLoader(true);
         try {
             await login(valor, guardar);
-            estaLogin();
-            const paginaActual = window.location.href
-            window.location.href='/articulos'
+            debugger
+            setlog();
+            history.push('/adverts')
 
         } catch (error) {
             error.status === 401
                 ? setError('Usuario y/o contraseña incorrectos')
                 : setError(error.message);
         } finally {
-            setLoader(false);
+            //setLoader(false);
         }
     };
 

@@ -1,0 +1,14 @@
+.contenderFiltroArticulo{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: 
+    "filtro articulos";
+}
+
+.filtro{
+    grid-area: filtro;
+}
+
+.listaArticulos{
+    grid-area: articulos;
+}
