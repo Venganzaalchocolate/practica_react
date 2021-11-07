@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { creaArticulo } from '../api/service'
 import { useHistory } from 'react-router'
 import { tags } from '../utils/tags'
-import { element } from 'prop-types'
+import { Loader } from '../utils/Loader'
 
 function CreaArticulo() {
   const history = useHistory()
@@ -16,6 +16,7 @@ function CreaArticulo() {
   })
   const [error, setError] = useState(null)
   const [listags, setTags] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const listatags = async () => {
     try {
@@ -34,6 +35,7 @@ function CreaArticulo() {
   }
 
   const envioFormulario = async evento => {
+    setLoader(true)
     const form = new FormData(evento.target)
     evento.preventDefault()
     try {
@@ -42,6 +44,8 @@ function CreaArticulo() {
       history.push('/adverts')
     } catch (error) {
       setError(error.message)
+    } finally {
+      setLoader(false)
     }
   }
 
@@ -108,6 +112,11 @@ function CreaArticulo() {
         </button>
         {error && <div>{error}</div>}
       </form>
+      {loader && (
+        <div className='loader'>
+          <Loader />
+        </div>
+      )}
     </div>
   )
 }

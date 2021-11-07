@@ -25,11 +25,10 @@ function Login() {
     };
 
     const envioFormulario = async (evento) => {
+        setLoader(true)
         evento.preventDefault();
-        //setLoader(true);
         try {
             await login(valor, guardar);
-            debugger
             setlog();
             history.push('/adverts')
 
@@ -38,7 +37,7 @@ function Login() {
                 ? setError('Usuario y/o contraseña incorrectos')
                 : setError(error.message);
         } finally {
-            //setLoader(false);
+            setLoader(false);
         }
     };
 
@@ -64,6 +63,7 @@ function Login() {
                 onChange={cambioCelda}
                 placeholder="contraseña"
             />
+            <label>Guardar credenciales</label>
             <input type="checkbox" value={guardar} onChange={guardarToken} />
             <button type="submit" disabled={!valor.email || !valor.password}>
                 enviar

@@ -1,29 +1,32 @@
 import { useEffect, useState } from 'react'
-import { getArticulos } from '../api/service'
 import './ListaArticulos.css'
 import noimagen from '../images/nofoto.jpg'
 import { Link } from 'react-router-dom'
-import { element } from 'prop-types'
+import { Loader } from '../utils/Loader'
 
 const url = process.env.REACT_APP_API_BASE_URL
 
 function ListaArticulos(articulos) {
   const [error, setError] = useState(null)
-  const [art, setart]=useState([])
+  const [art, setart] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const obtenerArticulos = async () => {
+    setLoader(true)
     try {
-        return await articulos;
+      return await articulos
     } catch (error) {
-        setError(error.message);
+      setError(error.message)
+    } finally {
+      setLoader(false)
     }
-};
-  
+  }
 
   useEffect(() => {
     obtenerArticulos().then(function (datos) {
-      const datosArticulos=datos.articulos;
-      setart(datosArticulos)})
+      const datosArticulos = datos.articulos
+      setart(datosArticulos)
+    })
   }, [articulos])
 
   return (
@@ -44,7 +47,9 @@ function ListaArticulos(articulos) {
               <h2>{articulo.name}</h2>
               <p>{articulo.price}</p>
               {articulo.sale ? <p>Vendo</p> : <p>Busco</p>}
-              {articulo.tags.map(element=>(<p>{element}</p>))}
+              {articulo.tags.map(element => (
+                <p>{element}</p>
+              ))}
             </article>
           </Link>
         ))
@@ -52,6 +57,11 @@ function ListaArticulos(articulos) {
         <Link to='/adverts/new'>
           <h1>No hay articulos, crea el tuyo</h1>
         </Link>
+      )}
+      {loader && (
+        <div className='loader'>
+          <Loader />
+        </div>
       )}
     </section>
   )

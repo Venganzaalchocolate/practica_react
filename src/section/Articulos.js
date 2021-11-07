@@ -6,7 +6,7 @@ import './Articulos.css'
 
 function Articulos() {
   const [articulos, setArticulos] = useState([])
-  
+
   const obtenerArticulos = async () => {
     try {
       const objetoArticulos = await getArticulos()
@@ -16,8 +16,8 @@ function Articulos() {
     }
   }
 
-  const cambiarArticulos = (lista) =>{
-      setArticulos(lista)
+  const cambiarArticulos = lista => {
+    setArticulos(lista)
   }
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function Articulos() {
   return (
     <div className='contenderFiltroArticulo'>
       <ListaArticulos articulos={articulos} />
-      <Filtro articulos={articulos} cambiarArticulos={cambiarArticulos}/>
+      <Filtro articulos={articulos} cambiarArticulos={cambiarArticulos} />
     </div>
   )
 }

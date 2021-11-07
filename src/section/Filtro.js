@@ -32,7 +32,9 @@ function Filtro({articulos, cambiarArticulos}) {
             const filtronombre = filtrarNombre(form.get('name'), datosArticulos)
             const filtroprecio = filtrarPrecio(filtronombre, form.get('hasta'), form.get('desde'))
             const filtrotags= filtrarTags(filtroprecio, form.getAll('tags'))
+            console.log(filtrotags)
             const filtrosale= filtroSale(filtrotags, form.get('sale'))
+            console.log(filtrosale)
             cambiarArticulos(filtrosale)
         }
             

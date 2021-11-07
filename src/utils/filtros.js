@@ -1,4 +1,5 @@
 export const filtrarNombre = (nombre, bd) => {
+    if(nombre===''){return bd}
     const nom = bd.filter(function (el) {
         return el.name.toLowerCase().indexOf(nombre.toLowerCase()) > -1;
     });
@@ -6,12 +7,17 @@ export const filtrarNombre = (nombre, bd) => {
 };
 
 export const filtrarPrecio = (ar, valoaHasta, valorDesde) => {
-    const filtroprecio = ar.filter((articulo) =>
-        valoaHasta > valorDesde
-            ? articulo.price >= valorDesde && articulo.price <= valoaHasta
-            : articulo.price >= valorDesde
-    );
-    return filtroprecio;
+    
+    const precio= ar.filter(element=>{
+        if (valoaHasta > valorDesde) {
+            return element.price >= valorDesde && element.price <= valoaHasta
+        } else {
+            return element.price >= valorDesde
+        }
+        
+    })
+    return precio
+
 };
 
 export const filtrarTags = (ar, tags) => {
@@ -35,7 +41,7 @@ export const filtrarTags = (ar, tags) => {
 };
 
 export const filtroSale = (ar, sale) => {
-    if (sale===false) {return ar.filter((function (el) {return el.sale===false;})) }
-    if (sale===true) {return ar.filter((function (el) {return el.sale===true;})) }
+    if (sale==='false') {return ar.filter((function (el) {return el.sale===false;})) }
+    if (sale==='true') {return ar.filter((function (el) {return el.sale===true;})) }
     else {return ar}
 }
